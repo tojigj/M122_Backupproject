@@ -1,5 +1,5 @@
 # Backupskript
-# 06.01.2022
+# 08.01.2022
 # Luis Gjokaj
 # main.ps1
 # Version 1.5 (nach 5 mal bearbeiten der Finalversion)
@@ -13,7 +13,7 @@ Write-Host "Rufen Sie makeBackup um das Backup zu starten."
 
 # Erstellt ein vollstaendiges Backup einer Directory. Keine Parameter.
 function makeBackup {
-    $answer = Read-Host "Wollen Sie die Pfaede fuer Backup, source, und log aendern?(n/y) "
+    $answer = Read-Host "Wollen Sie die Pfade fuer Backup, source, und log aendern?(n/y) "
 
     # Verschiedne Pfaede werden ueberschrieben falls man das will. Die auswahl wird mit if else geprueft.
     if ($answer -eq "y") {
@@ -49,7 +49,9 @@ function makeBackup {
     get-childitem -path $sourcePfad -Recurse | Select-Object name | out-file -FilePath $logpfad
 
     # SourcePfad wird umgeaendert fuer pruefungszwecke.
-    $sourcePfad = "..\TopSrc\"
+    if($sourcePfad -eq "..\TopSrc\*") {
+        $sourcePfad = "..\TopSrc\"
+    }
 
     # Daten ueber die Verzeichnisse werden hier gespeichert.
     $backupFiles = (get-childitem -path $backupPfad -Recurse)
